@@ -22,8 +22,9 @@ RUN apt-get -y update -qq && \
 WORKDIR /app
 
 # Configure postgres
-RUN echo "host all  all    0.0.0.0/0  trust" >> /etc/postgresql/11/main/pg_hba.conf && \
-    echo "listen_addresses='*'" >> /etc/postgresql/11/main/postgresql.conf
+RUN echo "host all  all    0.0.0.0/0  trust" >> /etc/postgresql/11/main/pg_hba.conf
+COPY postgresql.overwrite.conf postgresql.overwrite.conf
+RUN cat postgresql.overwrite.conf >> /etc/postgresql/11/main/postgresql.conf
 
 # Nominatim install
 ENV NOMINATIM_VERSION v3.4.2
